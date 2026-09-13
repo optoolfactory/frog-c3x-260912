@@ -101,8 +101,6 @@ class Controls:
 
     ignore = self.sensor_packets + ['testJoystick']
 
-    self.camera_packets.remove("driverCameraState")
-
     if SIMULATION:
       ignore += ['driverCameraState', 'managerState']
     if REPLAY:
