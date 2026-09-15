@@ -130,6 +130,7 @@ class DriverMonitoring:
       settings = DRIVER_MONITOR_SETTINGS()
     # init policy settings
     self.settings = settings
+    self.monitoring_enabled = False
 
     # init driver status
     self.wheelpos_learner = RunningStatFilter()
@@ -392,6 +393,17 @@ class DriverMonitoring:
     return dat
 
   def run_step(self, sm):
+    if not self.monitoring_enabled:
+      self.face_detected = False
+      self.driver_distracted = False
+      self.distracted_types = []
+      self.current_events = Events()
+      self.awareness = 0.
+      self.awareness_active = 1.
+      self.awareness_passive = 1.
+      self.step_change = 0.
+      return
+
     # Set strictness
     self._set_policy(
       model_data=sm['modelV2'],
